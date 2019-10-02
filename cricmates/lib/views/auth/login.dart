@@ -276,7 +276,7 @@ class _LoginFormState extends State<WidgetFormLogin>
               child: SizedBox(
                 width: double.infinity,
                 child: RaisedButton(
-                  focusNode: _loginButtonFocus,
+                  // focusNode: _loginButtonFocus,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.0)
                   ),

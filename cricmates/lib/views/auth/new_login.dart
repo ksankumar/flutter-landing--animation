@@ -102,7 +102,7 @@ class _LoginPageState extends State<NewLogin> with TickerProviderStateMixin {
             },
             child: BlocBuilder<LoginBloc, LoginState>(
               builder: (context, state) {
-                return Stack(
+                return new Row(
                   children: <Widget>[
 //                    Column(
 //                      children: <Widget>[
