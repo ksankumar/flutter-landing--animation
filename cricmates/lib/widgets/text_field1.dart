@@ -46,15 +46,15 @@ class AppTextFormField extends StatelessWidget {
           border: Border.all(
             color: Colors.grey,
           ),
-          borderRadius: BorderRadius.all(Radius.circular(Constant.sizeSmall))),
-      padding: EdgeInsets.all(Constant.sizeMedium),
+          borderRadius: BorderRadius.all(Radius.circular(ScreenSize.sizeSmall))),
+      padding: EdgeInsets.all(ScreenSize.sizeMedium),
       child: TextFormField(
         controller: textController,
         focusNode: focusNode,
         decoration: InputDecoration(
           icon: Icon(
             icon ?? Icons.email,
-            size: Constant.texIconSize,
+            size: ScreenSize.texIconSize,
           ),
           hintText: hintText,
           hintStyle: TextStyles.labelStyle,

@@ -7,7 +7,7 @@ class AppButton extends StatelessWidget {
   final GestureTapCallback onTap;
   final String text;
   final BorderRadius _borderRadius = BorderRadius.all(
-    Radius.circular(Constant.sizeSmall),
+    Radius.circular(ScreenSize.sizeSmall),
   );
 
   final bool enabled;
@@ -24,7 +24,7 @@ class AppButton extends StatelessWidget {
       borderRadius: _borderRadius,
       onTap: enabled ? onTap : () {},
       child: Container(
-        padding: EdgeInsets.all(Constant.sizeMedium),
+        padding: EdgeInsets.all(ScreenSize.sizeMedium),
         child: Center(
           child: Text(
             text,

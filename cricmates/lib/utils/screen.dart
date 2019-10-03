@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:cricmates/utils/helper/screen_util.dart';
 
-Size screenSize;
 double defaultScreenWidth = 400.0;
 double defaultScreenHeight = 810.0;
 double screenWidth = defaultScreenWidth;
 double screenHeight = defaultScreenHeight;
 
-class Constant {
+class ScreenSize {
   /*Padding & Margin Constants*/
-
+  static MediaQueryData _mediaQuery;
   static double sizeExtraSmall = 5.0;
   static double sizeDefault = 8.0;
   static double sizeSmall = 7.0;
@@ -27,7 +26,7 @@ class Constant {
   static double screenWidthSixth = screenWidth / 6;
   static double screenWidthTenth = screenWidth / 10;
   static double screenWidthEleven = screenWidth / 11;
-  static double screenPaading = screenWidth / 24;
+  static double screenPadding = screenWidth / 24;
 
   /*Image Dimensions*/
 
@@ -35,6 +34,7 @@ class Constant {
   static double defaultImageHeight = 120.0;
   static double snackBarHeight = 50.0;
   static double texIconSize = 30.0;
+  static double imageHeight;
 
   /*Default Height&Width*/
   static double defaultIndicatorHeight = 5.0;
@@ -44,12 +44,10 @@ class Constant {
   static EdgeInsets spacingAllDefault = EdgeInsets.all(sizeDefault);
   static EdgeInsets spacingAllSmall = EdgeInsets.all(sizeSmall);
 
-  static void setDefaultSize(context) {
-    screenSize = MediaQuery
-        .of(context)
-        .size;
-    screenWidth = screenSize.width;
-    screenHeight = screenSize.height;
+  void init(context) {
+    _mediaQuery = MediaQuery.of(context);
+    screenWidth = _mediaQuery.size.width;
+    screenHeight = _mediaQuery.size.height;
 
     sizeLarge = 20.0;
     sizeXL = 30.0;
@@ -62,10 +60,10 @@ class Constant {
     screenWidthFifth = screenWidth / 5;
     screenWidthSixth = screenWidth / 6;
     screenWidthTenth = screenWidth / 10;
-    screenPaading = screenWidth / 24;
+    screenPadding = screenWidth / 24;
 
     defaultIconSize = 80.0;
-    defaultImageHeight = 120.0;
+    defaultImageHeight = screenHeight / 3.5;
     snackBarHeight = 50.0;
     texIconSize = 30.0;
 
@@ -76,15 +74,13 @@ class Constant {
     spacingAllSmall = EdgeInsets.all(sizeSmall);
 
     FontSize.setDefaultFontSize();
-  }
-
-  static void setScreenAwareConstant(context) {
+//  }
+//  static void setScreenAwareConstant(context) {
     ScreenUtil.instance = ScreenUtil(
       width: defaultScreenWidth,
       height: defaultScreenHeight,
       allowFontScaling: true,
-    )
-      ..init(context);
+    )..init(context);
 
     FontSize.setScreenAwareFontSize();
 
@@ -111,12 +107,12 @@ class Constant {
     screenWidthFifth = ScreenUtil.instance.width / 5;
     screenWidthSixth = ScreenUtil.instance.width / 6;
     screenWidthTenth = ScreenUtil.instance.width / 10;
-    screenPaading = ScreenUtil.instance.width / 24;
+    screenPadding = ScreenUtil.instance.width / 24;
 
     /*Image Dimensions*/
 
     defaultIconSize = ScreenUtil.instance.setWidth(80.0);
-    defaultImageHeight = ScreenUtil.instance.setHeight(120.0);
+    imageHeight = ScreenUtil.instance.setHeight(defaultImageHeight);
     snackBarHeight = ScreenUtil.instance.setHeight(50.0);
     texIconSize = ScreenUtil.instance.setWidth(30.0);
 

@@ -19,11 +19,11 @@ class AppLogoWidget extends StatelessWidget {
       tag: Strings.appName,
       child: Container(
         margin: margin ?? EdgeInsets.zero,
-        padding: padding ?? Constant.spacingAllSmall,
+        padding: padding ?? ScreenSize.spacingAllSmall,
         child: Image(
           image: AssetImage(image ?? Images.appLogo),
-          height: size ?? Constant.defaultImageHeight,
-          width: size ?? Constant.defaultImageHeight,
+          height: size ?? ScreenSize.defaultImageHeight,
+          width: size ?? ScreenSize.defaultImageHeight,
           fit: BoxFit.contain,
         ),
       ),

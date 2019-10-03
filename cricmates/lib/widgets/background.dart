@@ -41,13 +41,13 @@ class IndicatorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: height ?? Constant.defaultIndicatorHeight,
-      width: width ?? Constant.defaultIndicatorWidth,
+      height: height ?? ScreenSize.defaultIndicatorHeight,
+      width: width ?? ScreenSize.defaultIndicatorWidth,
       child: Container(
         decoration: BoxDecoration(
           color: color ?? Colors.white,
           borderRadius: BorderRadius.all(
-              Radius.circular(height ?? Constant.defaultIndicatorHeight)),
+              Radius.circular(height ?? ScreenSize.defaultIndicatorHeight)),
         ),
       ),
     );

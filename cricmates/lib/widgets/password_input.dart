@@ -48,7 +48,7 @@ class PasswordInputField extends State<InputPassword> {
             labelText: widget.label,
             prefixIcon: Icon(
                 Icons.lock,
-                size: Constant.texIconSize
+                size: ScreenSize.texIconSize
             ),
             suffixIcon: GestureDetector(
               onTap: () {

@@ -76,6 +76,7 @@ class Login extends StatelessWidget {
 class WidgetAppLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    ScreenSize().init(context);
     var mediaQuery = MediaQuery.of(context);
     return Padding(
       padding: EdgeInsets.only(
@@ -93,8 +94,8 @@ class WidgetAppLogo extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 10.0),
                 child: Image(
                     image: AssetImage('assets/img/tiger-logo.png'),
-                    height: Constant.defaultImageHeight+20,
-                    width: Constant.defaultImageHeight+20,
+                    height: ScreenSize.imageHeight,
+                    width: ScreenSize.imageHeight,
                     fit: BoxFit.contain
                 ),
               ),
@@ -177,7 +178,6 @@ class _LoginFormState extends State<WidgetFormLogin>
 
   @override
   void initState() {
-    print('called');
     animationController = AnimationController(
         duration: Duration(milliseconds: 1000), vsync: this);
     animation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
@@ -218,7 +218,6 @@ class _LoginFormState extends State<WidgetFormLogin>
 
   @override
   Widget build(BuildContext context) {
-    Constant.setScreenAwareConstant(context);
     final loginBloc = BlocProvider.of<LoginBloc>(context);
     return new Form(
       key: _loginState,

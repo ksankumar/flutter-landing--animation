@@ -1,20 +1,16 @@
-import 'package:cricmates/views/auth/form.dart';
-import 'package:cricmates/widgets/text_field1.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:flutter/services.dart';
+import 'package:cricmates/views/auth/form.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cricmates/blocs/login_bloc.dart';
-import 'package:cricmates/widgets/text_input.dart';
-import 'package:cricmates/widgets/password_input.dart';
 import 'package:cricmates/utils/strings.dart';
-import 'package:cricmates/utils/validator.dart';
-//import 'package:cricmates/utils/screen.dart';
 import 'package:cricmates/utils/styles.dart';
+import 'package:cricmates/utils/screen.dart';
 
 class ManojLogin extends StatefulWidget {
   ManojLogin({Key key, this.title}) : super(key: key);
   final String title;
+
   @override
   _ManojLoginState createState() => _ManojLoginState();
 }
@@ -30,9 +26,7 @@ class _ManojLoginState extends State<ManojLogin> with TickerProviderStateMixin {
   TextEditingController usernameController = new TextEditingController();
   TextEditingController passController = new TextEditingController();
   final _scaffoldState = GlobalKey<ScaffoldState>();
-
   var height = 300.0;
-  var width = 300.0;
   var progressDialog;
   bool isProgressDialog = false;
 
@@ -48,7 +42,7 @@ class _ManojLoginState extends State<ManojLogin> with TickerProviderStateMixin {
         if (animationFadeIn.status == AnimationStatus.completed) {
           controller2.forward();
           new Timer(
-              const Duration(milliseconds: 400), () => controller3.forward());
+              const Duration(milliseconds: 700), () => controller3.forward());
         }
       });
     });
@@ -57,9 +51,9 @@ class _ManojLoginState extends State<ManojLogin> with TickerProviderStateMixin {
       setState(() {
         if (animationMoveUp.status == AnimationStatus.forward) {
           height = animationScaleDown.value;
-          width = height;
-          //if (spacing > 0) spacing  --;
-        } else if (animationMoveUp.status == AnimationStatus.completed) {}
+        } else if (animationMoveUp.status == AnimationStatus.completed) {
+           height = ScreenSize.imageHeight;
+        }
       });
     });
 
@@ -73,6 +67,11 @@ class _ManojLoginState extends State<ManojLogin> with TickerProviderStateMixin {
   }
 
   @override
+  void setState(VoidCallback fn) {
+    super.setState(fn);
+  }
+
+  @override
   void dispose() {
     controller.dispose();
     super.dispose();
@@ -80,187 +79,137 @@ class _ManojLoginState extends State<ManojLogin> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    ScreenSize().init(context);
     var mediaQuery = MediaQuery.of(context);
     return SafeArea(
       child: Scaffold(
         key: _scaffoldState,
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.white,
         body: BlocProvider<LoginBloc>(
-            builder: (context) {
-              return LoginBloc();
-            },
-            child: BlocListener<LoginBloc, LoginState>(listener:
-                (context, state) {
+          builder: (context) {
+            return LoginBloc();
+          },
+          child: BlocListener<LoginBloc, LoginState>(
+            listener: (context, state) {
               // _checkStatusLogin(state);
-            }, child:
-                BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
-              return Container(
-                height: mediaQuery.size.height,
-                width: mediaQuery.size.width,
-                child: new Stack(
-                  children: <Widget>[
-                    Positioned(
-                      child: new Opacity(
-                        opacity: animationFadeIn.value,
-                        child: new Container(
-                            margin: EdgeInsets.only(top: 50),
+            },
+            child: BlocBuilder<LoginBloc, LoginState>(
+              builder: (context, state) {
+                return Container(
+                  height: mediaQuery.size.height,
+                  width: mediaQuery.size.width,
+                  child: new Stack(
+                    children: <Widget>[
+                      Positioned(
+                        child: new Opacity(
+                          opacity: animationFadeIn.value,
+                          child: new Container(
+//                            padding: EdgeInsets.only(
+//                              left: 16.0,
+//                              top: mediaQuery.padding.top > 0
+//                                  ? mediaQuery.padding.top
+//                                  : 16.0,
+//                              right: 16.0,
+//                            ),
                             alignment: Alignment(0.0, animationMoveUp.value),
-                            child: new Column(
+                            child: new Wrap(
                               children: <Widget>[
                                 new Container(
-                                  child: new Image.asset(
-                                      'assets/img/tiger-logo.png',
-                                      height: height / 1.2,
-                                      width: width / 1.2,
-                                      fit: BoxFit.fill),
                                   alignment:
                                       Alignment(0.0, animationMoveUp.value),
+                                  child: new Image.asset(
+                                    'assets/img/tiger-logo.png',
+                                    width: height,
+                                    fit: BoxFit.contain,
+                                  ),
                                 ),
                                 new Container(
+                                  alignment: Alignment(0.0, animationMoveUp.value * 2.9),
                                   child: Text(
                                     'CricMate',
                                     style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize:
-                                            animationTextSizeDown.value / 1.2,
-                                        fontFamily: 'Pacifico-Regular'),
-                                  ),
-                                  alignment:
-                                      Alignment(0.0, animationMoveUp.value),
-                                )
-                              ],
-                            )),
-                      ),
-                    ),
-                    Positioned(
-                      left: 20,
-                      top: mediaQuery.size.height / 3,
-                      child: Opacity(
-                        opacity: animationFadeInInput.value,
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                              width: mediaQuery.size.width,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    Strings.loginTitle,
-                                    style: TextStyles.loginTitle,
-                                  ),
-                                  SizedBox(
-                                    height: 6,
-                                  ),
-                                  Text(
-                                    Strings.loginSubTitle,
-                                    style: TextStyles.loginSubTitle,
-                                  ),
-                                  SizedBox(
-                                    height: 6,
-                                  ),
-
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: FormWidget(),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      left: 16.0,
-                                      right: 16.0,
-                                      bottom: mediaQuery.padding.bottom > 0
-                                          ? mediaQuery.padding.bottom
-                                          : 16.0,
+                                      color: Colors.pink,
+                                      fontSize: animationTextSizeDown.value / 1.5,
+                                      fontFamily: 'Pacifico-Regular',
                                     ),
-                                    child: Center(
-                                      child: RichText(
-                                        text: TextSpan(
-                                          children: [
-                                            TextSpan(
-                                              text: Strings.newAccount,
-                                              style: TextStyles.loginSubTitle,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: mediaQuery.size.height / 3.3,
+                        left: 16,
+                        right: 16,
+                        child: Opacity(
+                          opacity: animationFadeInInput.value,
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                width: mediaQuery.size.width,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      Strings.loginTitle,
+                                      style: TextStyles.loginTitle,
+                                    ),
+                                    SizedBox(
+                                      height: 6,
+                                    ),
+                                    Text(
+                                      Strings.loginSubTitle,
+                                      style: TextStyles.loginSubTitle,
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    FormWidget(),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Center(
+                                      child: Container(
+                                        alignment: Alignment(0.0, 1.0),
+                                        height: 25,
+                                        child: Center(
+                                          child: RichText(
+                                            text: TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                  text: Strings.newAccount,
+                                                  style:
+                                                      TextStyles.loginSubTitle,
+                                                ),
+                                                TextSpan(
+                                                  text: Label.signUp,
+                                                  style: TextStyles.linkText,
+                                                ),
+                                              ],
                                             ),
-                                            TextSpan(
-                                              text: Label.signUp,
-                                              style: TextStyles.linkText,
-                                            ),
-                                          ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  )
-                                  //],
-//                    ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            }))),
-      ),
-    );
-  }
-
-  void submit() {
-    print(usernameController.text);
-    if (passController.text.isNotEmpty) {
-      getSignIn(usernameController.text, passController.text);
-    } else {
-      showMyDialog('Please enter number');
-    }
-  }
-
-  getSignIn(String user, String pass) async {
-    print(pass);
-    setState(() {
-      isProgressDialog = true;
-    });
-  }
-
-  void showMyDialog(String msg) {
-    setState(() {
-      isProgressDialog = false;
-    });
-
-    var alert = new AlertDialog(
-      content: new Stack(
-        children: <Widget>[
-          new Text(
-            'Message',
-            style:
-                TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
-          new Container(
-              margin: new EdgeInsets.only(top: 40.0),
-              child: new Text(
-                '$msg',
-                style: TextStyle(
-                    color: Colors.black45, fontWeight: FontWeight.bold),
-              )),
-        ],
+        ),
       ),
-      actions: <Widget>[
-        new FlatButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: new Text(
-              'OK',
-              style: TextStyle(color: const Color(0xFF860000)),
-            ))
-      ],
     );
-
-    showDialog(
-        context: context,
-        builder: (_) {
-          return alert;
-        });
   }
 
   void initData() {
@@ -270,7 +219,7 @@ class _ManojLoginState extends State<ManojLogin> with TickerProviderStateMixin {
 
     controller2 = new AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
-    animationMoveUp = new Tween(begin: 0.0, end: -0.8).animate(controller2);
+    animationMoveUp = new Tween(begin: 0.0, end: -0.95).animate(controller2);
     animationScaleDown =
         new Tween(begin: 300.0, end: 180.0).animate(controller2);
     animationTextSizeDown =

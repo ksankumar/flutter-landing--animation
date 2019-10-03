@@ -52,7 +52,7 @@ class TextInputField extends State<InputText> {
             labelText: widget.label,
             prefixIcon: Icon(
                 widget.prefixIcon,
-                size: Constant.texIconSize
+                size: ScreenSize.texIconSize
             ),
             suffixIcon: CircleIconButton(
               onPressed: () {
