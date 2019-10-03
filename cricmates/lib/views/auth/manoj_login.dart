@@ -52,7 +52,7 @@ class _ManojLoginState extends State<ManojLogin> with TickerProviderStateMixin {
         if (animationMoveUp.status == AnimationStatus.forward) {
           height = animationScaleDown.value;
         } else if (animationMoveUp.status == AnimationStatus.completed) {
-           height = ScreenSize.imageHeight;
+          height = ScreenSize.imageHeight;
         }
       });
     });
@@ -104,13 +104,6 @@ class _ManojLoginState extends State<ManojLogin> with TickerProviderStateMixin {
                         child: new Opacity(
                           opacity: animationFadeIn.value,
                           child: new Container(
-//                            padding: EdgeInsets.only(
-//                              left: 16.0,
-//                              top: mediaQuery.padding.top > 0
-//                                  ? mediaQuery.padding.top
-//                                  : 16.0,
-//                              right: 16.0,
-//                            ),
                             alignment: Alignment(0.0, animationMoveUp.value),
                             child: new Wrap(
                               children: <Widget>[
@@ -124,12 +117,14 @@ class _ManojLoginState extends State<ManojLogin> with TickerProviderStateMixin {
                                   ),
                                 ),
                                 new Container(
-                                  alignment: Alignment(0.0, animationMoveUp.value * 2.9),
+                                  alignment: Alignment(
+                                      0.0, animationMoveUp.value * 2.9),
                                   child: Text(
                                     'CricMate',
                                     style: TextStyle(
                                       color: Colors.pink,
-                                      fontSize: animationTextSizeDown.value / 1.5,
+                                      fontSize:
+                                          animationTextSizeDown.value / 1.5,
                                       fontFamily: 'Pacifico-Regular',
                                     ),
                                   ),
@@ -140,7 +135,7 @@ class _ManojLoginState extends State<ManojLogin> with TickerProviderStateMixin {
                         ),
                       ),
                       Positioned(
-                        top: mediaQuery.size.height / 3.3,
+                        top: mediaQuery.size.height / 3,
                         left: 16,
                         right: 16,
                         child: Opacity(
