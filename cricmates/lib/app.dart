@@ -11,6 +11,7 @@ class App extends StatelessWidget {
         title: 'CricMates',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
+      
         onGenerateRoute: router.generateRoute,
         initialRoute: login,
       );

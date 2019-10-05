@@ -19,6 +19,7 @@ class _FormWidgetState extends State<FormWidget> {
       child: Column(
         children: <Widget>[
           InputText(
+
             controller: usernameController,
             label: Label.email,
             prefixIcon: Icons.people,
@@ -48,7 +49,7 @@ class _FormWidgetState extends State<FormWidget> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5.0)),
               padding: const EdgeInsets.all(16.0),
-              color: Colors.pink,
+              color: Colors.deepPurple[900],
               child: Text(Label.login, style: TextStyles.buttonText),
               onPressed: () {
                 Navigator.pushNamed(context, 'home');

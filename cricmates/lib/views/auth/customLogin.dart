@@ -1,7 +1,9 @@
 import 'package:cricmates/utils/helper/customBackgroundClipper.dart';
 import 'package:cricmates/views/auth/form.dart';
 import 'package:cricmates/widgets/text_field1.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as prefix0;
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -161,65 +163,141 @@ class _CustomLoginState extends State<CustomLogin>
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);
-    return SafeArea(
-      child: Scaffold(
-        key: _scaffoldState,
-        backgroundColor: Colors.white,
-        body: BlocProvider<LoginBloc>(
-          builder: (context) {
-            return LoginBloc();
-          },
-          child: BlocListener<LoginBloc, LoginState>(
-              listener: (context, state) {},
-              child:
-                  BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
-                return Container(
-                  height: mediaQuery.size.height,
-                  width: mediaQuery.size.width,
-                  child: Stack(
-                    children: <Widget>[
-                      
-                      clipperContainer(),
-                      imageWrapper(),
-                      getRestOfWidgets(),
-                      
-                      
-                    ],
+    return Scaffold(
+      key: _scaffoldState,
+      backgroundColor: Colors.white,
+      body: BlocProvider<LoginBloc>(
+        builder: (context) {
+          return LoginBloc();
+        },
+        child: BlocListener<LoginBloc, LoginState>(
+            listener: (context, state) {},
+            child:
+                BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
+              return SafeArea(
+                child: SingleChildScrollView(
+                  dragStartBehavior: DragStartBehavior.down,
+                  child: Container(
+                    color: Colors.white,
+                    height: mediaQuery.size.height,
+                    width: mediaQuery.size.width,
+                    child: Column(
+                      children: <Widget>[
+                        topContainer(),
+                        secondContainer(),
+                        signupArea(),
+                        
+                      ],
+                    ),
                   ),
-                );
-              })),
+                ),
+              );
+            })),
+      ),
+    );
+  }
+
+  Widget secondContainer() {
+    return AnimatedContainer(
+      curve: Curves.easeIn,
+      duration: Duration(seconds: 1),
+      child: formContainer(),
+    );
+  }
+
+  Widget formContainer() {
+    return Container(
+      color: Colors.deepPurple[900],
+      width: MediaQuery.of(context).size.width,
+      child: Container(
+        decoration: BoxDecoration(
+            border: Border.all(width: 0, color: Colors.transparent),
+            color: Colors.white,
+            borderRadius: BorderRadius.only(topRight: Radius.circular(50.0))),
+        child: getRestOfWidgets(),
+      ),
+    );
+  }
+
+  Widget bottomContainer() {
+    return Stack(
+      children: <Widget>[
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            color: Colors.deepPurple[900],
+            child: SizedBox(height: 100,),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget topContainer() {
+    return Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.deepPurple,
+                  Colors.deepPurple[800],
+                  Colors.deepPurple[900]
+                ]),
+                border: Border.all(width: 0.0, color: Colors.transparent),
+            borderRadius: BorderRadius.only(
+              
+              bottomLeft: Radius.circular(50.0),
+            )),
+        height: MediaQuery.of(context).size.height / 3,
+        width: MediaQuery.of(context).size.width,
+        child: Stack(
+          children: <Widget>[welcomeText(), imageWrapper()],
+        ));
+  }
+
+  Widget welcomeText() {
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: Text(
+          'Welcome,',
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 30,
+              fontFamily: 'GoogleSans-Medium'),
         ),
       ),
     );
   }
 
   Widget imageWrapper() {
-    return Card(
-      color: Colors.transparent,
+    return Container(
+      // color: Colors.transparent,
       // elevation: 10,
       child: new Opacity(
         opacity: animationFadeIn.value,
         child: new Container(
-          
-            margin: EdgeInsets.only(top: 30),
+            margin: EdgeInsets.only(top: 55),
             alignment: Alignment(0.0, animationMoveUp.value),
             child: new Column(
               children: <Widget>[
                 new Container(
-                  
                   child: new Image.asset('assets/img/tiger-logo.png',
-                      height: height / 1.2,
-                      width: width / 1.2,
-                      fit: BoxFit.fill),
+                      height: 150, width: 150, fit: BoxFit.fill),
                   alignment: Alignment(0.0, animationMoveUp.value),
                 ),
                 new Container(
                   child: Text(
                     'CricMate',
                     style: TextStyle(
-                        color: Colors.black,
-                        fontSize: animationTextSizeDown.value / 1.2,
-                        fontFamily: 'Pacifico-Regular'),
+                        color: Colors.white,
+                        fontSize: 35,
+                        fontFamily: 'GoogleSans-Medium'),
                   ),
                   alignment: Alignment(0.0, animationMoveUp.value),
                 )
@@ -229,92 +307,63 @@ class _CustomLoginState extends State<CustomLogin>
     );
   }
 
-  Widget clipperContainer() {
-    return Positioned(
-      top: 0,
-      left: 0,
-      right: 0,
-      child: Opacity(
-        opacity: animationFadeInInput.value,
-              child: ClipPath(
-          clipper: CustomBackgroundClipper(),
-          child: Card(
-            color: Colors.pink,
-            child: Container(
-              height: MediaQuery.of(context).size.height / 2.5,
+ 
+ 
+
+  Widget getRestOfWidgets() {
+    return Opacity(
+      opacity: animationFadeInInput.value,
+      child: Column(
+        children: <Widget>[
+          Container(
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                emailTextBox(),
+              ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget signupArea() {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: 16.0,
+        right: 16.0,
+        bottom: MediaQuery.of(context).padding.bottom > 0
+            ? MediaQuery.of(context).padding.bottom
+            : 16.0,
+      ),
+      child: Center(
+        child: RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: Strings.newAccount,
+                style: TextStyles.loginSubTitle,
+              ),
+              TextSpan(
+                text: Label.signUp,
+                style: TextStyles.linkText,
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget getRestOfWidgets() {
-    return Positioned(
-      left: 20,
-      top: MediaQuery.of(context).size.height / 2.4,
-      child: Opacity(
-        opacity: animationFadeInInput.value,
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    Strings.loginTitle,
-                    style: TextStyles.loginTitle,
-                  ),
-                  SizedBox(
-                    height: 6,
-                  ),
-                  Text(
-                    Strings.loginSubTitle,
-                    style: TextStyles.loginSubTitle,
-                  ),
-                  SizedBox(
-                    height: 6,
-                  ),
-
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: FormWidget(),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 16.0,
-                      right: 16.0,
-                      bottom: MediaQuery.of(context).padding.bottom > 0
-                          ? MediaQuery.of(context).padding.bottom
-                          : 16.0,
-                    ),
-                    child: Center(
-                      child: RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: Strings.newAccount,
-                              style: TextStyles.loginSubTitle,
-                            ),
-                            TextSpan(
-                              text: Label.signUp,
-                              style: TextStyles.linkText,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                  //],
-//                    ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+  Widget emailTextBox() {
+    return SingleChildScrollView(
+      
+        child: Padding(
+      padding: EdgeInsets.only(left: 30.0, top: 50),
+      child: FormWidget(),
+    ));
   }
 }
