@@ -1,17 +1,10 @@
-import 'package:cricmates/utils/helper/customBackgroundClipper.dart';
 import 'package:cricmates/views/auth/form.dart';
-import 'package:cricmates/widgets/text_field1.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as prefix0;
 import 'dart:async';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cricmates/blocs/login_bloc.dart';
-import 'package:cricmates/widgets/text_input.dart';
-import 'package:cricmates/widgets/password_input.dart';
 import 'package:cricmates/utils/strings.dart';
-import 'package:cricmates/utils/validator.dart';
 import 'package:cricmates/utils/styles.dart';
 
 class CustomLogin extends StatefulWidget {
@@ -183,10 +176,8 @@ class _CustomLoginState extends State<CustomLogin>
                     width: mediaQuery.size.width,
                     child: Column(
                       children: <Widget>[
-                        topContainer(),
-                        secondContainer(),
-                        signupArea(),
-                        
+                        Flexible(flex: 3, child: firstContainer()),
+                        Flexible(flex: 3, child: formContainer()),
                       ],
                     ),
                   ),
@@ -197,82 +188,47 @@ class _CustomLoginState extends State<CustomLogin>
     );
   }
 
-  Widget secondContainer() {
-    return AnimatedContainer(
-      curve: Curves.easeIn,
-      duration: Duration(seconds: 1),
-      child: formContainer(),
-    );
-  }
-
   Widget formContainer() {
     return Container(
       color: Colors.deepPurple[900],
       width: MediaQuery.of(context).size.width,
-      child: Container(
-        decoration: BoxDecoration(
-            border: Border.all(width: 0, color: Colors.transparent),
-            color: Colors.white,
-            borderRadius: BorderRadius.only(topRight: Radius.circular(50.0))),
-        child: getRestOfWidgets(),
+      child: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(50.0),
+        ),
+        child: Container(
+          color: Colors.white,
+          child: getRestOfWidgets(),
+        ),
       ),
     );
   }
 
-  Widget bottomContainer() {
-    return Stack(
-      children: <Widget>[
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            color: Colors.deepPurple[900],
-            child: SizedBox(height: 100,),
-          ),
-        )
-      ],
-    );
+  Widget firstContainer() {
+    return ClipRRect(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(50.0),
+        ),
+        child: topContainer());
   }
 
   Widget topContainer() {
     return Container(
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomRight,
-                colors: [
-                  Colors.deepPurple,
-                  Colors.deepPurple[800],
-                  Colors.deepPurple[900]
-                ]),
-                border: Border.all(width: 0.0, color: Colors.transparent),
-            borderRadius: BorderRadius.only(
-              
-              bottomLeft: Radius.circular(50.0),
-            )),
+          gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomRight,
+              colors: [
+                Colors.deepPurple,
+                Colors.deepPurple[800],
+                Colors.deepPurple[900]
+              ]),
+        ),
         height: MediaQuery.of(context).size.height / 3,
         width: MediaQuery.of(context).size.width,
         child: Stack(
-          children: <Widget>[welcomeText(), imageWrapper()],
+          children: <Widget>[imageWrapper()],
         ));
-  }
-
-  Widget welcomeText() {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: Text(
-          'Welcome,',
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 30,
-              fontFamily: 'GoogleSans-Medium'),
-        ),
-      ),
-    );
   }
 
   Widget imageWrapper() {
@@ -282,13 +238,12 @@ class _CustomLoginState extends State<CustomLogin>
       child: new Opacity(
         opacity: animationFadeIn.value,
         child: new Container(
-            margin: EdgeInsets.only(top: 55),
             alignment: Alignment(0.0, animationMoveUp.value),
-            child: new Column(
+            child: new Wrap(
               children: <Widget>[
                 new Container(
                   child: new Image.asset('assets/img/tiger-logo.png',
-                      height: 150, width: 150, fit: BoxFit.fill),
+                      height: 150, width: 150, fit: BoxFit.contain),
                   alignment: Alignment(0.0, animationMoveUp.value),
                 ),
                 new Container(
@@ -296,7 +251,7 @@ class _CustomLoginState extends State<CustomLogin>
                     'CricMate',
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: 35,
+                        fontSize: 30,
                         fontFamily: 'GoogleSans-Medium'),
                   ),
                   alignment: Alignment(0.0, animationMoveUp.value),
@@ -307,9 +262,6 @@ class _CustomLoginState extends State<CustomLogin>
     );
   }
 
- 
- 
-
   Widget getRestOfWidgets() {
     return Opacity(
       opacity: animationFadeInInput.value,
@@ -317,11 +269,13 @@ class _CustomLoginState extends State<CustomLogin>
         children: <Widget>[
           Container(
             width: MediaQuery.of(context).size.width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Stack(
               children: <Widget>[
-                emailTextBox(),
+                Container(
+                    child: Padding(
+                  padding: EdgeInsets.only(left: 30.0, top: 50),
+                  child: FormWidget(),
+                )),
               ],
             ),
           ),
@@ -331,39 +285,32 @@ class _CustomLoginState extends State<CustomLogin>
   }
 
   Widget signupArea() {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: 16.0,
-        right: 16.0,
-        bottom: MediaQuery.of(context).padding.bottom > 0
-            ? MediaQuery.of(context).padding.bottom
-            : 16.0,
-      ),
-      child: Center(
-        child: RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: Strings.newAccount,
-                style: TextStyles.loginSubTitle,
-              ),
-              TextSpan(
-                text: Label.signUp,
-                style: TextStyles.linkText,
-              ),
-            ],
+    return Container(
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: 16.0,
+          right: 16.0,
+          bottom: MediaQuery.of(context).padding.bottom > 0
+              ? MediaQuery.of(context).padding.bottom
+              : 16.0,
+        ),
+        child: Center(
+          child: RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: Strings.newAccount,
+                  style: TextStyles.loginSubTitle,
+                ),
+                TextSpan(
+                  text: Label.signUp,
+                  style: TextStyles.linkText,
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
-  }
-
-  Widget emailTextBox() {
-    return SingleChildScrollView(
-      
-        child: Padding(
-      padding: EdgeInsets.only(left: 30.0, top: 50),
-      child: FormWidget(),
-    ));
   }
 }

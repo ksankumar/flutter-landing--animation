@@ -19,7 +19,6 @@ class _FormWidgetState extends State<FormWidget> {
       child: Column(
         children: <Widget>[
           InputText(
-
             controller: usernameController,
             label: Label.email,
             prefixIcon: Icons.people,
