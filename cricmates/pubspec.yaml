@@ -31,6 +31,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   responsive_grid:
+  auto_size_text:
+  carousel_slider:
 
 
 # For information on the generic Dart part of this file, see the

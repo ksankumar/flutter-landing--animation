@@ -242,19 +242,25 @@ class _CustomLoginState extends State<CustomLogin>
             child: new Wrap(
               children: <Widget>[
                 new Container(
-                  child: new Image.asset('assets/img/tiger-logo.png',
-                      height: 150, width: 150, fit: BoxFit.contain),
-                  alignment: Alignment(0.0, animationMoveUp.value),
-                ),
-                new Container(
-                  child: Text(
-                    'CricMate',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontFamily: 'GoogleSans-Medium'),
+                  child: Hero(
+                    tag: "logoImage",
+                    child: new Image.asset('assets/img/tiger-logo.png',
+                        height: 150, width: 150, fit: BoxFit.contain),
                   ),
                   alignment: Alignment(0.0, animationMoveUp.value),
+                ),
+                Hero(
+                  tag: 'titleText',
+                  child: new Container(
+                    child: Text(
+                      'CricMate',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
+                          fontFamily: 'GoogleSans-Medium'),
+                    ),
+                    alignment: Alignment(0.0, animationMoveUp.value),
+                  ),
                 )
               ],
             )),
